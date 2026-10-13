@@ -1,0 +1,18 @@
+digraph ERD {
+  graph [rankdir=LR, fontname="Helvetica", nodesep=0.5, ranksep=1.1, labelloc=t, label="CampusBite Student Food Delivery — Entity Relationship Diagram (3NF)\n(crow's foot: tee = one, crow = many)"];
+  node [shape=plain, fontname="Helvetica", fontsize=11];
+  edge [fontname="Helvetica", fontsize=10, arrowhead=crowodot, arrowtail=tee, dir=both, color="#8F4217"];
+  customers [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4"><TR><TD BGCOLOR="#C8602B"><FONT COLOR="white"><B>customers</B></FONT></TD></TR><TR><TD ALIGN="LEFT"><B>PK</B> customer_id<BR ALIGN="LEFT"/>full_name<BR ALIGN="LEFT"/>phone (UQ)<BR ALIGN="LEFT"/>email<BR ALIGN="LEFT"/>student_no<BR ALIGN="LEFT"/>created_at<BR ALIGN="LEFT"/></TD></TR></TABLE>>];
+  delivery_zones [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4"><TR><TD BGCOLOR="#C8602B"><FONT COLOR="white"><B>delivery_zones</B></FONT></TD></TR><TR><TD ALIGN="LEFT"><B>PK</B> zone_id<BR ALIGN="LEFT"/>name (UQ)<BR ALIGN="LEFT"/>area_type<BR ALIGN="LEFT"/>delivery_fee<BR ALIGN="LEFT"/>is_active<BR ALIGN="LEFT"/></TD></TR></TABLE>>];
+  orders [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4"><TR><TD BGCOLOR="#B8862D"><FONT COLOR="white"><B>orders</B></FONT></TD></TR><TR><TD ALIGN="LEFT"><B>PK</B> order_id<BR ALIGN="LEFT"/>order_ref (UQ)<BR ALIGN="LEFT"/><B>FK</B> customer_id<BR ALIGN="LEFT"/><B>FK</B> zone_id<BR ALIGN="LEFT"/>delivery_address (nullable)<BR ALIGN="LEFT"/>order_date, slot_time<BR ALIGN="LEFT"/>subtotal, delivery_fee<BR ALIGN="LEFT"/>total, vat_included<BR ALIGN="LEFT"/>payment_method, notes<BR ALIGN="LEFT"/>status, created_at<BR ALIGN="LEFT"/></TD></TR></TABLE>>];
+  order_items [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4"><TR><TD BGCOLOR="#2F6B45"><FONT COLOR="white"><B>order_items</B></FONT></TD></TR><TR><TD ALIGN="LEFT"><B>PK, FK</B> order_id<BR ALIGN="LEFT"/><B>PK, FK</B> item_id<BR ALIGN="LEFT"/>quantity<BR ALIGN="LEFT"/>unit_price<BR ALIGN="LEFT"/></TD></TR></TABLE>>];
+  menu_items [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4"><TR><TD BGCOLOR="#C8602B"><FONT COLOR="white"><B>menu_items</B></FONT></TD></TR><TR><TD ALIGN="LEFT"><B>PK</B> item_id<BR ALIGN="LEFT"/><B>FK</B> category_id<BR ALIGN="LEFT"/>name (UQ)<BR ALIGN="LEFT"/>description<BR ALIGN="LEFT"/>price<BR ALIGN="LEFT"/>image_path<BR ALIGN="LEFT"/>is_active, is_available<BR ALIGN="LEFT"/></TD></TR></TABLE>>];
+  menu_categories [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4"><TR><TD BGCOLOR="#C8602B"><FONT COLOR="white"><B>menu_categories</B></FONT></TD></TR><TR><TD ALIGN="LEFT"><B>PK</B> category_id<BR ALIGN="LEFT"/>name (UQ)<BR ALIGN="LEFT"/></TD></TR></TABLE>>];
+  kitchen_settings [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4"><TR><TD BGCOLOR="#5C5049"><FONT COLOR="white"><B>kitchen_settings</B> (capacity)</FONT></TD></TR><TR><TD ALIGN="LEFT"><B>PK</B> setting_id (always 1)<BR ALIGN="LEFT"/>orders_per_slot<BR ALIGN="LEFT"/></TD></TR></TABLE>>];
+  staff [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4"><TR><TD BGCOLOR="#5C5049"><FONT COLOR="white"><B>staff</B> (login only)</FONT></TD></TR><TR><TD ALIGN="LEFT"><B>PK</B> staff_id<BR ALIGN="LEFT"/>username (UQ)<BR ALIGN="LEFT"/>password_hash<BR ALIGN="LEFT"/>created_at<BR ALIGN="LEFT"/></TD></TR></TABLE>>];
+  customers -> orders [label="places"];
+  delivery_zones -> orders [label="delivered to"];
+  orders -> order_items [label="contains"];
+  menu_items -> order_items [label="sold as"];
+  menu_categories -> menu_items [label="groups"];
+}

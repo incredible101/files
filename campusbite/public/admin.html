@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Kitchen Dashboard — CampusBite</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+<header class="site"><div class="wrap nav">
+  <a class="logo" href="index.html">CampusBite <span>KITCHEN</span></a>
+  <button class="cart-btn hidden" id="logout" type="button">Log out</button>
+</div></header>
+
+<main class="wrap">
+  <section class="login-card" id="login-view">
+    <h2>Staff login</h2>
+    <p>Sign in to manage orders and the menu.</p>
+    <form id="login-form">
+      <div class="field"><label for="l-user">Username</label><input id="l-user" autocomplete="username" required></div>
+      <div class="field"><label for="l-pass">Password</label><input id="l-pass" type="password" autocomplete="current-password" required></div>
+      <button class="btn btn-primary btn-full" type="submit">Sign in</button>
+      <div id="l-msg" role="alert"></div>
+    </form>
+  </section>
+
+  <section class="hidden" id="dash-view" style="padding:40px 0 80px">
+    <h2 style="font-size:32px">Dashboard</h2>
+    <div class="admin-stats" style="margin-top:20px">
+      <div class="stat-card"><div class="stat-num" id="s-orders">0</div><div class="stat-label">Orders today</div></div>
+      <div class="stat-card"><div class="stat-num" id="s-placed">0</div><div class="stat-label">New</div></div>
+      <div class="stat-card"><div class="stat-num" id="s-preparing">0</div><div class="stat-label">In the kitchen</div></div>
+      <div class="stat-card"><div class="stat-num" id="s-revenue">R0</div><div class="stat-label">Sales today</div></div>
+    </div>
+    <div class="tabs" role="tablist">
+      <button class="tab active" id="tab-orders" role="tab" type="button">Orders</button>
+      <button class="tab" id="tab-menu" role="tab" type="button">Menu availability</button>
+    </div>
+    <div id="msg" role="status" aria-live="polite"></div>
+
+    <div id="panel-orders">
+      <div class="toolbar">
+        <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+          <label for="f-date" style="margin:0">Day</label><input id="f-date" type="date" class="inline-select">
+          <label for="f-status" style="margin:0">Status</label>
+          <select id="f-status" class="inline-select"><option value="">All</option><option>Placed</option><option>Preparing</option><option>Ready</option><option>Delivered</option><option>Cancelled</option></select>
+        </div>
+        <button class="admin-btn" id="f-all" type="button">Show all days</button>
+      </div>
+      <div id="orders"></div>
+    </div>
+    <div id="panel-menu" class="hidden"><div id="menu-list"></div></div>
+  </section>
+</main>
+<script src="js/admin.js"></script>
+</body>
+</html>
